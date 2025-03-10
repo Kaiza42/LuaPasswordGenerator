@@ -2,8 +2,13 @@ local caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567
 local caracteresSpeciaux = "!@#$%^&*()"
 local caracteresASCII = "☺☻♥♦♣♠•◘○"
 
--- permet un mot de passe différent a chaque relance du code 
-math.randomseed(os.time()) 
+
+local function initialiserSeed()
+    local time = os.time()  -- Seconds since epoch
+    local clock = os.clock() * 1000000  -- Time in microseconds
+    local seed = time + clock
+    math.randomseed(seed)
+end
 
 -- genere un mot de passe aléatoire
 function generateur(longueur, speciaux, ascii)
@@ -23,12 +28,13 @@ function generateur(longueur, speciaux, ascii)
     end
     return MotDePasse
 end
+
 -- paramètre du mot de passe
 local mdp = generateur(12, true, true)  
 local mdp2 = generateur(50, true, true)
 local mdp3 = generateur(100, true , true)
-print(mdp3)
 
+initialiserSeed()
 -- fonction qui verifie les critère demander 
 function verifMotDePasse(MotDePasse)
     local contientMajuscule = MotDePasse:match("%u") ~= nil  
@@ -39,12 +45,6 @@ function verifMotDePasse(MotDePasse)
     local pasDeSuite = not MotDePasse:match("123") and not MotDePasse:match("abc")
 
     return contientMajuscule and contientMinuscule and contientSpeciaux and contientChiffre and pasDeSuite and contientAscii
-end
-
-if verifMotDePasse(mdp) then
-    print("Mot de passe valide")
-else
-    print("Mot de passe invalide")
 end
 
 -- calcul a revoir mais affiche un score aux mot de passe 
@@ -60,18 +60,16 @@ function scoreMotDePasse(MotDePasse)
 end
  local score = scoreMotDePasse(mdp3)
  
-
  function generatorMdpValide(longueur, ascii, speciaux)
     local MotDePasse = generateur(longueur, speciaux,ascii)
     while not verifMotDePasse(MotDePasse) do
-        print(MotDePasse)
-        print("Mot de passe invalide relance du generateur")
+        print(MotDePasse .. " Mot de passe invalide relance du generateur")
         MotDePasse = generateur(longueur, speciaux,ascii)
     end
     return MotDePasse
 end
 
-print(generatorMdpValide(12,true,true))
+print(generatorMdpValide(12,true,true) .. " Mot de passe Valide" )
 
 
 
