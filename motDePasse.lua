@@ -24,13 +24,9 @@ function verifMotDePasse(MotDePasse)
     local contientMinuscule = MotDePasse:match("%l") ~= nil  
     local contientSpeciaux = MotDePasse:match("[!@#$%^&*()]") ~= nil  
     local contientChiffre = MotDePasse:match("%d") ~= nil  
+    local pasDeSuite = not MotDePasse:match("123") and not MotDePasse:match("abc")
 
-    print("Contient une majuscule ? " .. tostring(contientMajuscule))
-    print("Contient une minuscule ? " .. tostring(contientMinuscule))
-    print("Contient un caractère spécial ? " .. tostring(contientSpeciaux))
-    print("Contient un chiffre ? " .. tostring(contientChiffre))
-
-    return contientMajuscule and contientMinuscule and contientSpeciaux and contientChiffre
+    return contientMajuscule and contientMinuscule and contientSpeciaux and contientChiffre and pasDeSuite
 end
 
 if verifMotDePasse(mdp) then
@@ -38,5 +34,19 @@ if verifMotDePasse(mdp) then
 else
     print("Mot de passe avec spéciaux invalide")
 end
+
+-- calcul a revoir mais affiche un score aux mot de passe 
+function scoreMotDePasse(MotDePasse)
+    local score = 0 
+   if MotDePasse:match("%u") then score = score +1 end
+   if MotDePasse:match("%l") then score = score +1 end
+   if MotDePasse:match("[!@#$%^&*()]") then score = score +1 end
+   if MotDePasse:match("%d") then score = score + 1 end
+   if #MotDePasse >= 12 then score = score +2 end
+    return score 
+end
+ local score = scoreMotDePasse(mdp)
+ print(score)
+
 
 
