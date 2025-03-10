@@ -58,9 +58,20 @@ function scoreMotDePasse(MotDePasse)
    if #MotDePasse >= 12 then score = score +2 end
     return score 
 end
- local score = scoreMotDePasse(mdp2)
- print(score)
+ local score = scoreMotDePasse(mdp3)
+ 
 
+ function generatorMdpValide(longueur, ascii, speciaux)
+    local MotDePasse = generateur(longueur, speciaux,ascii)
+    while not verifMotDePasse(MotDePasse) do
+        print(MotDePasse)
+        print("Mot de passe invalide relance du generateur")
+        MotDePasse = generateur(longueur, speciaux,ascii)
+    end
+    return MotDePasse
+end
+
+print(generatorMdpValide(12,true,true))
 
 
 
