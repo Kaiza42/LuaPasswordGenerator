@@ -30,9 +30,6 @@ function generateur(longueur, speciaux, ascii)
 end
 
 -- paramètre du mot de passe
-local mdp = generateur(12, true, true)  
-local mdp2 = generateur(50, true, true)
-local mdp3 = generateur(100, true , true)
 
 initialiserSeed()
 -- fonction qui verifie les critère demander 
@@ -56,9 +53,10 @@ function scoreMotDePasse(MotDePasse)
    if MotDePasse:match("%d") then score = score + 1 end
    if MotDePasse:match("☺☻♥♦♣♠•◘○") then score = score +1 end
    if #MotDePasse >= 12 then score = score +2 end
+   if not MotDePasse:match("123") and not MotDePasse("abc") then score = score +1 end -- si le mot de passe ne contient pas ses suite alors score +1
+   
     return score 
 end
- local score = scoreMotDePasse(mdp3)
  
  function generatorMdpValide(longueur, ascii, speciaux)
     local MotDePasse = generateur(longueur, speciaux,ascii)
@@ -69,7 +67,9 @@ end
     return MotDePasse
 end
 
-print(generatorMdpValide(12,true,true) .. " Mot de passe Valide" )
+local mdpValide = generatorMdpValide(16, true, true)
+local score = scoreMotDePasse(mdpValide)
+print(" le socre du mdp est : " .. score ..  " le mot de passe est : ".. mdpValide .. " Mot de passe Valide" )
 
 
 
