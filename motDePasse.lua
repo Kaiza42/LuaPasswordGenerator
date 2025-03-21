@@ -64,8 +64,7 @@ function ScoreMotDePasse(MotDePasse)
     if MotDePasse:match("[!@#$%^&*()]") then score = score + 1 end
     if MotDePasse:match("%d") then score = score + 1 end
     if #MotDePasse >= 12 then score = score + 2 end
-    if not MotDePasse:match("123") and not MotDePasse:match("abc") then score = score + 1 end -- si le mot de passe ne contient pas ses suite alors score +1
-
+    if not MotDePasse:match(suite)  then score = score + 1 end -- si le mot de passe ne contient pas ses suite alors score +1
     return score
 end
 
