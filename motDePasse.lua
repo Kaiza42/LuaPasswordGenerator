@@ -50,9 +50,10 @@ function VerifMotDePasse(MotDePasse)
     local contientSpeciaux = MotDePasse:match("[!@#$%^&*()]") ~= nil
     local contientChiffre = MotDePasse:match("%d") ~= nil
     local pasDeSuite = not MotDePasse:match("123") and not MotDePasse:match("abc")
-    local suiteNonLogique = not ContientSuite(MotDePasse) 
+    local Motdemander = not ContientSuite(MotDePasse) -- eviter les mot demander
+    local suitelogique = not MotDePasse:match("(.)%1%1") ~= nil -- éviter les suite 
 
-    return contientMajuscule and contientMinuscule and contientSpeciaux and contientChiffre and pasDeSuite and suiteNonLogique
+    return contientMajuscule and contientMinuscule and contientSpeciaux and contientChiffre and pasDeSuite and Motdemander and suitelogique
 end
 
 -- calcul a revoir mais affiche un score aux mot de passe
