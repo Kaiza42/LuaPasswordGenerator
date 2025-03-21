@@ -11,7 +11,7 @@ local function initialiserSeed()
 end
 
 -- genere un mot de passe aléatoire
-function generateur(longueur, speciaux, ascii)
+function Generateur(longueur, speciaux, ascii)
     local selectionCaratere = caracteres
     if speciaux and ascii then 
         selectionCaratere = caracteres .. caracteresSpeciaux .. caracteresASCII
@@ -33,7 +33,7 @@ end
 
 initialiserSeed()
 -- fonction qui verifie les critère demander 
-function verifMotDePasse(MotDePasse)
+function VerifMotDePasse(MotDePasse)
     local contientMajuscule = MotDePasse:match("%u") ~= nil  
     local contientMinuscule = MotDePasse:match("%l") ~= nil  
     local contientSpeciaux = MotDePasse:match("[!@#$%^&*()]") ~= nil  
@@ -45,7 +45,7 @@ function verifMotDePasse(MotDePasse)
 end
 
 -- calcul a revoir mais affiche un score aux mot de passe 
-function scoreMotDePasse(MotDePasse)
+function ScoreMotDePasse(MotDePasse)
     local score = 0 
    if MotDePasse:match("%u") then score = score +1 end
    if MotDePasse:match("%l") then score = score +1 end
@@ -53,22 +53,22 @@ function scoreMotDePasse(MotDePasse)
    if MotDePasse:match("%d") then score = score + 1 end
    if MotDePasse:match("☺☻♥♦♣♠•◘○") then score = score +1 end
    if #MotDePasse >= 12 then score = score +2 end
-   if not MotDePasse:match("123") and not MotDePasse("abc") then score = score +1 end -- si le mot de passe ne contient pas ses suite alors score +1
+   if not MotDePasse:match("123") and not MotDePasse:match("abc") then score = score + 1 end -- si le mot de passe ne contient pas ses suite alors score +1
    
     return score 
 end
  
- function generatorMdpValide(longueur, ascii, speciaux)
-    local MotDePasse = generateur(longueur, speciaux,ascii)
-    while not verifMotDePasse(MotDePasse) do
+ function GeneratorMdpValide(longueur, ascii, speciaux)
+    local MotDePasse = Generateur(longueur, speciaux,ascii)
+    while not VerifMotDePasse(MotDePasse) do
         print(MotDePasse .. " Mot de passe invalide relance du generateur")
-        MotDePasse = generateur(longueur, speciaux,ascii)
+        MotDePasse = Generateur(longueur, speciaux,ascii)
     end
     return MotDePasse
 end
 
-local mdpValide = generatorMdpValide(16, true, true)
-local score = scoreMotDePasse(mdpValide)
+local mdpValide = GeneratorMdpValide(16, true, true)
+local score = ScoreMotDePasse(mdpValide)
 print(" le socre du mdp est : " .. score ..  " le mot de passe est : ".. mdpValide .. " Mot de passe Valide" )
 
 
